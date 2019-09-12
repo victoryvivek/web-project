@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
+from django import forms
 
-from firstapp.forms import LoginForm,UserRegisterForm
+from firstapp.forms import LoginForm,UserRegisterForm,AnswerForm
 from firstapp.models import UserInfo,Question
 
 # Create your views here.
@@ -52,7 +54,7 @@ def thanks_for_logging(request):
     return render(request,'thanks_for_logging.html')
 
 def go_to_question(request,q_no):
-    
+
     user_info=get_object_or_404(UserInfo, user_id=request.user.pk)
     current_level=user_info.current_level
     question_obj=Question.objects.filter(question_no=current_level)
@@ -60,4 +62,21 @@ def go_to_question(request,q_no):
         heading=i.heading
         img=i.product_image
         question_no=i.question_no
-    return render(request,'level1.html',{'heading':heading,'img':img,'question_no':question_no})
+        question_answer=i.question_answer
+
+    if request.method=="POST":
+        form=AnswerForm(request.POST)
+        if form.is_valid():
+            answer=form.cleaned_data['answer']
+
+            if answer==question_answer:
+                user_info.current_level=user_info.current_level+1
+                user_info.score=user_info.score+1
+                user_info.save()
+                return redirect('firstapp:question_current',q_no=user_info.current_level)
+            else :
+                return render(request,'level1.html',{'heading':heading,'img':img,'question_no':question_no,'form':form,'wrong':True})           
+            
+    else:
+        form=AnswerForm()
+    return render(request,'level1.html',{'heading':heading,'img':img,'question_no':question_no,'form':form,'wrong':False})

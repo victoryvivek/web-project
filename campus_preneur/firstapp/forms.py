@@ -14,3 +14,6 @@ class UserRegisterForm(forms.ModelForm):
             'password': forms.PasswordInput(),
             'email': forms.EmailInput()
         }
+
+class AnswerForm(forms.Form):
+    answer=forms.CharField(max_length=100, required=True)
