@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+{% load staticfiles %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+table {
+    font-family: 'Lobster', cursive;
+    border-collapse: collapse;
+    width: 50%;
+    margin-left:260px;
+}
+
+th {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+}
+
+td{
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+tr:hover {background-color:#555;}
+th.a{width:300px;}
+td.b{text-align:center}
+</style>
+<div style="margin-left:15%;padding:1px 16px;height:100%;">
+      <h1 style="text-align:center;font-size:100px;margin:1px;color:#41B3A3;font-family:algerian;">Dashboard<img style="width:130px;height:130px;margin:20px;border-radius:50%" src="{% static "CampusPreneur/css/logo.png" %}"></h1>
+      <div><img src="{% static "CampusPreneur/css/avatar.png" %}" style="border-radius:50%;width:200px;height:200px;margin-left:250px;"><spam style="margin-left:200px;font-size:30px;">Team @{{request.user}}</spam></div>
+      <p style="margin-top:40px">Your Ranking : {{ rank }}</p>
+      <p>Your Current Level : {{ current_level }}</p>
+</div>
+
+
+{% endblock%}

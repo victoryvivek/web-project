@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+{%load staticfiles%}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+    <style>
+    body{
+      font-family: 'Lobster', cursive;
+      font-size:25px;
+    }
+    li.dropdown {
+    display: inline-block;
+     }
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 432px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+     }
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    }
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    }
+.dd {
+    float: left;
+    width: 25%;
+}
+.nav navbar-nav navbar-right{
+  font-size: 25px;
+}
+
+</style>
+  </head>
+
+  <body>
+    <nav class="navbar mynav" role="navigation" id="navbar">
+        {% if user.is_authenticated %}
+        
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown"> <a class="dropbtn">Levels</a>
+           <div class="dropdown-content">
+            <div  class="dd">
+              <a href="{%url 'firstapp:question_current' 1 %}">Level 1</a>
+         </div>
+         <div  class="dd">
+
+         </div>
+         <div  class="dd">
+     
+         </div>
+          <div  class="dd">
+     
+          </div>
+         </div>
+          </li>
+          <li><a href="#">Hints</a></li>
+          <li> <a href="{%url 'firstapp:logout'%}">SignOut</a> </li>
+          {%else%}
+          <a class="navbar-brand mynav">Welcome</a>
+          <ul class="nav navbar-nav navbar-right">
+          <li><a href="{%url 'firstapp:login'%}">Login</a></li>
+          <li><a href="{%url 'firstapp:register'%}">SignUp</a></li></ul>
+          {%endif%}
+          </ul>
+    </nav>
+      {%block content%}
+      {%endblock%}
+  </body>
+</html>

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+.answer
+{
+  display: block;
+  margin: auto;
+}
+.submit
+{
+  display: block;
+  margin: auto;
+}
+.sample
+{
+  position: relative;
+  border: 3px solid #000000;
+}
+figcaption
+{
+  text-align: center;
+  font-family: sans-serif;
+}
+
+</style>
+<div style="margin-left:15%;padding:1px 16px;height:100%;">
+      <h1 style="text-align:center;font-size:100px;margin:5px;color:#41B3A3;font-family:algerian;">Campus Preneur<img style="width:130px;height:130px;margin:13px;" src="{% static "CampusPreneur/css/logo.png" %}"></h1>
+      <h2 style="text-align:center;font-family:ravie;margin:auto;">{{ heading }}</h2>
+         <div style="margin-left:35%;margin-right:35%">
+              <img class="sample" src="{{ img.url }}" width="300px" height="300px" align="right" >
+              <figcaption ><strong>Answer</strong</figcaption>
+                <input class="answer" type="text" name="answer" style="text-align:center;">
+                <br>
+                <form>
+                  {%csrf_token%}
+                  
+                </form>
+
+            </div>
+</div>
+
+
+{% endblock%}
