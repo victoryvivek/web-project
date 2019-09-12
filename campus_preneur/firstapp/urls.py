@@ -6,6 +6,8 @@ from django.conf.urls.static import static
 app_name="firstapp"
 
 urlpatterns = [
+    path('',views.index,name="index"),
+    path('home/',views.home,name="home"),
     path("login/",views.login_user, name="login"),
     path("register/",views.register_user, name="register"),
     path("dashboard/<int:current_level>/<int:rank>/",views.go_to_dashboard, name="dashboard"),

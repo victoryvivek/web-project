@@ -1,0 +1,27 @@
+{% load static %}
+<html>
+<head>
+	<title>College Preneur</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/preneur.css' %}">
+</head>
+<body>
+	<div class="box">
+		<h1>Campus Preneur</h1>
+		<div class="mask"></div>
+		</div>
+		<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+		<script type="text/javascript">
+			$('.box').mousemove(function(e){
+				var window = $(this);
+				var x_axis = e.pageX - window.offset().left;
+				$('.mask').css({
+					left : x_axis,
+					backgroundPosition : '-' + x_axis + 'px -'
+				})
+			})
+		</script>
+		<script>setTimeout(function(){window.location.href="{%url 'firstapp:home' %}"},3000);</script>
+
+</body>
+</html>

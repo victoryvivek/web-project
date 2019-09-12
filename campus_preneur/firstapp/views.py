@@ -100,8 +100,14 @@ def get_leaderboard(request):
     for x in user_info_list:
         x.rank=cnt
         cnt=cnt+1
-        
+
     return render(request,'leaderboard.html',{'user_info_list':user_info_list})
 
 def get_score(user_info):
     return user_info.score
+
+def index(request):
+    return render(request,'preneur.html')
+
+def home(request):
+    return render(request,'homeredirect.html')
