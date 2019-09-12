@@ -54,23 +54,9 @@
         {% if user.is_authenticated %}
         
         <ul class="nav navbar-nav navbar-right">
-          <li class="dropdown"> <a class="dropbtn">Levels</a>
-           <div class="dropdown-content">
-            <div  class="dd">
-              <a href="{%url 'firstapp:question_current' 1 %}">Level 1</a>
-         </div>
-         <div  class="dd">
-
-         </div>
-         <div  class="dd">
-     
-         </div>
-          <div  class="dd">
-     
-          </div>
-         </div>
-          </li>
-          <li><a href="#">Hints</a></li>
+        
+          <li><a href="{%url 'firstapp:question_current' 1 %}">Current Level</a></li>
+          <li><a href="{%url 'firstapp:leaderboard' %}">Leaderboard</a></li>
           <li> <a href="{%url 'firstapp:logout'%}">SignOut</a> </li>
           {%else%}
           <a class="navbar-brand mynav">Welcome</a>

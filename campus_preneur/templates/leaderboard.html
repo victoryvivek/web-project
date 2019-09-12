@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+
+table {
+    font-family: 'Lobster', cursive;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+tr:hover {background-color:#555;}
+th.a{width:200px;}
+</style>
+
+     <div style="margin-left:15%;padding:1px 16px;height:100%;">
+           <h1 style="text-align:center;font-size:100px;margin:5px;color:#41B3A3;font-family:algerian;">Leaderboard<img style="width:130px;height:130px;margin:13px;" src="{% static "CampusPreneur/css/logo.png" %}"></h1>
+
+  <table>
+  <tr>
+    <th class="a">Ranking</th>
+    <th class="b">Team Name</th>
+    <th class="c">Level</th>
+  </tr>
+
+  {% for user_leader in user_info_list %}
+    <tr>
+        <td>{{user_leader.rank}} </td>
+        <td>{{user_leader.user.username}}</td>
+        <td>{{user_leader.current_level}}</td>
+    </tr>
+  {% endfor %}
+    </table>
+
+    </div>
+
+{% endblock%}

@@ -73,6 +73,8 @@ def go_to_question(request,q_no):
                 user_info.current_level=user_info.current_level+1
                 user_info.score=user_info.score+1
                 user_info.save()
+                if user_info.score==25:
+                    return redirect('firstapp:complete_task')
                 return redirect('firstapp:question_current',q_no=user_info.current_level)
             else :
                 return render(request,'level1.html',{'heading':heading,'img':img,'question_no':question_no,'form':form,'wrong':True})           
@@ -80,3 +82,26 @@ def go_to_question(request,q_no):
     else:
         form=AnswerForm()
     return render(request,'level1.html',{'heading':heading,'img':img,'question_no':question_no,'form':form,'wrong':False})
+
+def complete_task(request):
+    return render(request,'complete_task.html')
+
+def get_leaderboard(request):
+    user_info_queryset=UserInfo.objects.all()
+
+    user_info_list=[]
+
+    for x in user_info_queryset:
+        user_info_list.append(x)
+
+    user_info_list.sort(key=get_score, reverse=True)
+    
+    cnt=1
+    for x in user_info_list:
+        x.rank=cnt
+        cnt=cnt+1
+        
+    return render(request,'leaderboard.html',{'user_info_list':user_info_list})
+
+def get_score(user_info):
+    return user_info.score

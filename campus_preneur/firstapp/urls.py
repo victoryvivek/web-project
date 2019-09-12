@@ -12,4 +12,6 @@ urlpatterns = [
     path("logout/",views.logout_user, name="logout"),
     path("thanks/",views.thanks_for_logging, name="thanks"),
     path('question/<int:q_no>/',views.go_to_question,name='question_current'),
+    path('complete/task/',views.complete_task,name="complete_task"),
+    path('leaderboard/',views.get_leaderboard,name="leaderboard"),
 ]
