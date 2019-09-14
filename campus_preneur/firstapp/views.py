@@ -42,6 +42,12 @@ def login_user(request):
                 login(request, user)
                 user_info=get_object_or_404(UserInfo, user_id=user.pk)
                 return redirect('firstapp:dashboard',current_level=user_info.current_level,rank=user_info.rank)
+            elif user is None :
+                messages.error(request, 'Username or Password not Correct')
+                return redirect('firstapp:login')
+            else :
+                messages.error(request, 'Verify reCAPTCHA')
+                return redirect('firstapp:login')
     else:
         form=LoginForm()
     return render(request,'login.html',{'form':form})
