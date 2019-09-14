@@ -142,6 +142,10 @@ def index(request):
     return render(request,'preneur.html')
 
 def home(request):
-    user_info=get_object_or_404(UserInfo, user_id=request.user.pk)
-    current_level=user_info.current_level
+    
+    if request.user.is_authenticated :
+        user_info=get_object_or_404(UserInfo, user_id=request.user.pk)
+        current_level=user_info.current_level
+    else:
+        current_level=1
     return render(request,'homeredirect.html',{'current_level':current_level})
