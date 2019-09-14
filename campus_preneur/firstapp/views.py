@@ -64,6 +64,10 @@ def register_user(request):
     return render(request,'registration.html',{'form':form})
 
 def go_to_dashboard(request,current_level,rank):
+
+    if not request.user.is_authenticated:
+        return redirect('firstapp:login')
+
     user_info=get_object_or_404(UserInfo, user_id=request.user.pk)
     if current_level == user_info.current_level and rank==user_info.rank:
         return render(request,'dashboard.html',{'current_level':current_level,'rank':rank})
@@ -75,9 +79,14 @@ def logout_user(request):
     return redirect('firstapp:thanks')
 
 def thanks_for_logging(request):
+    if not request.user.is_authenticated:
+        return redirect('firstapp:login')
     return render(request,'thanks_for_logging.html')
 
 def go_to_question(request,q_no):
+
+    if not request.user.is_authenticated:
+        return redirect('firstapp:login')
 
     user_info=get_object_or_404(UserInfo, user_id=request.user.pk)
     current_level=user_info.current_level
@@ -112,9 +121,14 @@ def go_to_question(request,q_no):
     return render(request,'level1.html',{'heading':heading,'img':img,'question_no':question_no,'form':form,'wrong':False,'current_level':current_level})
 
 def complete_task(request):
+    if not request.user.is_authenticated:
+        return redirect('firstapp:login')
     return render(request,'complete_task.html')
 
 def get_leaderboard(request):
+
+    if not request.user.is_authenticated:
+        return redirect('firstapp:login')
 
     user_info=get_object_or_404(UserInfo, user_id=request.user.pk)
     current_level=user_info.current_level
