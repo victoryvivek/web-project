@@ -1,11 +1,12 @@
 from django import forms
 from .models import UserInfo,User
 
+
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=50, required=True)
     password = forms.CharField(
         max_length=50, required=True, widget=forms.PasswordInput())
-
+    
 class UserRegisterForm(forms.ModelForm):
     class Meta:
         model=User
