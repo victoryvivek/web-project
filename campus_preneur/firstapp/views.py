@@ -45,7 +45,7 @@ def register_user(request):
 
 def go_to_dashboard(request,current_level,rank):
     user_info=get_object_or_404(UserInfo, user_id=request.user.pk)
-    if current_level == user_info.current_level:
+    if current_level == user_info.current_level and rank==user_info.rank:
         return render(request,'dashboard.html',{'current_level':current_level,'rank':rank})
     else:
         return redirect('firstapp:dashboard',current_level=user_info.current_level,rank=user_info.rank)
@@ -58,8 +58,6 @@ def thanks_for_logging(request):
     return render(request,'thanks_for_logging.html')
 
 def go_to_question(request,q_no):
-
-    
 
     user_info=get_object_or_404(UserInfo, user_id=request.user.pk)
     current_level=user_info.current_level
