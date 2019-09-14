@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import datetime
 
 
 class UserInfo(models.Model):
@@ -7,11 +8,13 @@ class UserInfo(models.Model):
     current_level=models.IntegerField(default=1)
     score=models.IntegerField(default=0)
     rank=models.IntegerField(default=0)
+    timestamp=models.DateTimeField()
 
     @classmethod
     def create(cls,user):
         user_info=cls( user=user)
-        user_info.rank=user.pk  
+        user_info.rank=user.pk 
+        user_info.timestamp=datetime.datetime.now() 
         return user_info
 
     def __str__(self):

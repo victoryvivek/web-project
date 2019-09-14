@@ -10,6 +10,7 @@ from firstapp.models import UserInfo,Question
 
 import requests
 import json
+import datetime
 
 # Create your views here.
 
@@ -109,6 +110,7 @@ def go_to_question(request,q_no):
             if answer==question_answer:
                 user_info.current_level=user_info.current_level+1
                 user_info.score=user_info.score+1
+                user_info.timestamp=datetime.datetime.now()
                 user_info.save()
                 if user_info.score==25:
                     return redirect('firstapp:complete_task')
@@ -140,6 +142,7 @@ def get_leaderboard(request):
     for x in user_info_queryset:
         user_info_list.append(x)
 
+    user_info_list.sort(key=get_timestamp)
     user_info_list.sort(key=get_score, reverse=True)
     
     cnt=1
@@ -151,6 +154,9 @@ def get_leaderboard(request):
 
 def get_score(user_info):
     return user_info.score
+
+def get_timestamp(user_info):
+    return user_info.timestamp
 
 def index(request):
     return render(request,'preneur.html')
