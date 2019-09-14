@@ -55,7 +55,7 @@
         
         <ul class="nav navbar-nav navbar-right">
         
-          <li><a href="{%url 'firstapp:question_current' 1 %}">Current Level</a></li>
+          <li><a href="{%url 'firstapp:question_current' current_level %}">Current Level</a></li>
           <li><a href="{%url 'firstapp:leaderboard' %}">Leaderboard</a></li>
           <li> <a href="{%url 'firstapp:logout'%}">SignOut</a> </li>
           {%else%}

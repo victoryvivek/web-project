@@ -20,7 +20,7 @@ def login_user(request):
             if user is not None:
                 login(request, user)
                 user_info=get_object_or_404(UserInfo, user_id=user.pk)
-                return redirect('firstapp:dashboard',current_level=user_info.current_level,rank=user_info.rank) 
+                return redirect('firstapp:dashboard',current_level=user_info.current_level,rank=user_info.rank)
     else:
         form=LoginForm()
     return render(request,'login.html',{'form':form})
@@ -44,7 +44,11 @@ def register_user(request):
     return render(request,'registration.html',{'form':form})
 
 def go_to_dashboard(request,current_level,rank):
-    return render(request,'dashboard.html',{'current_level':current_level,'rank':rank})
+    user_info=get_object_or_404(UserInfo, user_id=request.user.pk)
+    if current_level == user_info.current_level:
+        return render(request,'dashboard.html',{'current_level':current_level,'rank':rank})
+    else:
+        return redirect('firstapp:dashboard',current_level=user_info.current_level,rank=user_info.rank)
 
 def logout_user(request):
     logout(request)
@@ -55,8 +59,14 @@ def thanks_for_logging(request):
 
 def go_to_question(request,q_no):
 
+    
+
     user_info=get_object_or_404(UserInfo, user_id=request.user.pk)
     current_level=user_info.current_level
+
+    if q_no != current_level:
+        return redirect('firstapp:question_current',q_no=current_level)
+
     question_obj=Question.objects.filter(question_no=current_level)
     for i in question_obj:
         heading=i.heading
@@ -77,16 +87,20 @@ def go_to_question(request,q_no):
                     return redirect('firstapp:complete_task')
                 return redirect('firstapp:question_current',q_no=user_info.current_level)
             else :
-                return render(request,'level1.html',{'heading':heading,'img':img,'question_no':question_no,'form':form,'wrong':True})           
+                return render(request,'level1.html',{'heading':heading,'img':img,'question_no':question_no,'form':form,'wrong':True,'current_level':current_level})           
             
     else:
         form=AnswerForm()
-    return render(request,'level1.html',{'heading':heading,'img':img,'question_no':question_no,'form':form,'wrong':False})
+    return render(request,'level1.html',{'heading':heading,'img':img,'question_no':question_no,'form':form,'wrong':False,'current_level':current_level})
 
 def complete_task(request):
     return render(request,'complete_task.html')
 
 def get_leaderboard(request):
+
+    user_info=get_object_or_404(UserInfo, user_id=request.user.pk)
+    current_level=user_info.current_level
+
     user_info_queryset=UserInfo.objects.all()
 
     user_info_list=[]
@@ -101,7 +115,7 @@ def get_leaderboard(request):
         x.rank=cnt
         cnt=cnt+1
 
-    return render(request,'leaderboard.html',{'user_info_list':user_info_list})
+    return render(request,'leaderboard.html',{'user_info_list':user_info_list,'current_level':current_level})
 
 def get_score(user_info):
     return user_info.score
@@ -110,4 +124,6 @@ def index(request):
     return render(request,'preneur.html')
 
 def home(request):
-    return render(request,'homeredirect.html')
+    user_info=get_object_or_404(UserInfo, user_id=request.user.pk)
+    current_level=user_info.current_level
+    return render(request,'homeredirect.html',{'current_level':current_level})
