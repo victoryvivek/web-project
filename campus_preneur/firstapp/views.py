@@ -17,58 +17,52 @@ import datetime
 def login_user(request):
     
     if request.method=='POST':
-        form=LoginForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = authenticate(request, username=username, password=password)
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
 
-            secret_key = "6LfyY7gUAAAAACHtVWYfO5OpHJIBoZ0f2FnzRqho"
-            client_key = request.POST.get('g-recaptcha-response')
-            captcha_data={
-                'secret':secret_key,
-                'response':client_key
-            }
+        secret_key = "6LfyY7gUAAAAACHtVWYfO5OpHJIBoZ0f2FnzRqho"
+        client_key = request.POST.get('g-recaptcha-response')
+        captcha_data={
+            'secret':secret_key,
+            'response':client_key
+        }
 
-            get_response_of_user = requests.post(
-                'https://www.google.com/recaptcha/api/siteverify',data=captcha_data)
+        get_response_of_user = requests.post(
+            'https://www.google.com/recaptcha/api/siteverify',data=captcha_data)
 
-            json_response=json.loads(get_response_of_user.text)
-            verify_user = json_response['success']
-            print(json_response)
-            print("response is " +str(verify_user))
+        json_response=json.loads(get_response_of_user.text)
+        verify_user = json_response['success']
+        print(json_response)
+        print("response is " +str(verify_user))
 
-            if user is not None and verify_user==True:
-                login(request, user)
-                user_info=get_object_or_404(UserInfo, user_id=user.pk)
-                return redirect('firstapp:dashboard',current_level=user_info.current_level,rank=user_info.rank)
-            elif user is None :
-                messages.error(request, 'Username or Password not Correct')
-                return redirect('firstapp:login')
-            else :
-                messages.error(request, 'Verify reCAPTCHA')
-                return redirect('firstapp:login')
-    else:
-        form=LoginForm()
-    return render(request,'login.html',{'form':form})
+        if user is not None and verify_user==True:
+            login(request, user)
+            user_info=get_object_or_404(UserInfo, user_id=user.pk)
+            return redirect('firstapp:commingsoon')
+            #return redirect('firstapp:dashboard',current_level=user_info.current_level,rank=user_info.rank)
+        elif user is None :
+            messages.error(request, 'Username or Password not Correct')
+            return redirect('firstapp:login')
+        else :
+            messages.error(request, 'Verify reCAPTCHA')
+            return redirect('firstapp:login')
+
+    return render(request,'login.html')
 
 def register_user(request):
     if request.method=='POST':
-        form = UserRegisterForm(request.POST)
-        if form.is_valid():
-            user_name = form.cleaned_data['username']
-            password_ = form.cleaned_data['password']
-            first_name = form.cleaned_data['first_name']
-            last_name = form.cleaned_data['last_name']
-            email_ = form.cleaned_data['email']
-            user = User.objects.create_user(username=user_name, email=email_, password=password_, first_name=first_name, last_name=last_name)
-            user.save()
-            user_info=UserInfo.create(user)
-            user_info.save()
-            return redirect('firstapp:login')
-    else:
-        form = UserRegisterForm()
-    return render(request,'registration.html',{'form':form})
+        user_name = request.POST['username']
+        password_ = request.POST['password']
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        email_ = request.POST['email']
+        user = User.objects.create_user(username=user_name, email=email_, password=password_, first_name=first_name, last_name=last_name)
+        user.save()
+        user_info=UserInfo.create(user)
+        user_info.save()
+        return redirect('firstapp:login')
+    return render(request,'login.html')
 
 def go_to_dashboard(request,current_level,rank):
 
@@ -175,3 +169,9 @@ def home(request):
     else:
         current_level=1
     return render(request,'homeredirect.html',{'current_level':current_level})
+
+def go_to_developers(request):
+    return render(request,'developers.html')
+
+def comming_soon(request):
+    return render(request,'commingsoon.html')

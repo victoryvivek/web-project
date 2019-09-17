@@ -16,4 +16,6 @@ urlpatterns = [
     path('question/<int:q_no>/',views.go_to_question,name='question_current'),
     path('complete/task/',views.complete_task,name="complete_task"),
     path('leaderboard/',views.get_leaderboard,name="leaderboard"),
+    path('developers/',views.go_to_developers,name='developers'),
+    path('commingsoon/', views.comming_soon, name="commingsoon"),
 ]

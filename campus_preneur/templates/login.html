@@ -1,31 +1,46 @@
 <!DOCTYPE html>
 {% load staticfiles %}
-<html>
+<html lang="en" >
 <head>
-<meta charset="utf-8">
-<title>Campus Preneur</title>
-<link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <meta charset="UTF-8">
+  <title>Signin-Signup | Campus Preneur</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
-<body>
-<section>
-  <div class="container">
-    <div class="login-form">
-      <h1>Sign In</h1>
-
-      <form method="post">
-        {{ form.as_p }}
+<body >
+<div class="form-structor">
+	<div class="signup">
+		<h2 class="form-title" id="signup">SIGN UP</h2>
+		<div class="form-holder">
+		<form method="POST" action="{% url 'firstapp:register' %}" >
         {% csrf_token %}
-        <div class="g-recaptcha" data-sitekey="6LfyY7gUAAAAAAhjxxSXGqBKebJxz2Gr7DdquvOa"></div>
-        <input type="submit"  value="Login">
-      </form>
+			<input type="text" class="input" placeholder="First Name" name="first_name" />
+      <input type="text" class="input" placeholder="Last Name" name="last_name" />
+			<input type="text" class="input" placeholder="Username" name="username"/>
+			<input type="email" class="input" placeholder="Email" name="email" />
+			<input type="password" class="input" placeholder="Password" name="password"/>
+			<button type="submit" class="submit-btn">Sign up</button>
+		</form>
+    
+		</div>
+	</div>
+	<div class="login slide-up">
+		<div class="center">
+			<h2 class="form-title" id="login"><span>or</span>Log in</h2>
+			<div class="form-holder">
+        <form method="POST" action="{% url 'firstapp:login' %}">
+        {% csrf_token %}
+				  <input class="input" placeholder="Username" name="username"/>
+				  <input type="password" class="input" placeholder="Password" name="password" />
+          <div class="g-recaptcha" data-sitekey="6LfyY7gUAAAAAAhjxxSXGqBKebJxz2Gr7DdquvOa"></div>
+          <button type="submit" class="submit-btn">Log in</button>
+        </form>
+			</div>
+			
+		</div>
+	</div>
+</div>
+  <script  src="{% static 'script.js' %}"></script>
 
-      {% for message in messages %}
-      {{ message }}
-      {% endfor %}
-      <a href="#">Forgot Password</a>
-    </div>
-  </div>
-</section>
 </body>
 </html>
