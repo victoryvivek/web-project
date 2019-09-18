@@ -39,8 +39,8 @@ def login_user(request):
         if user is not None and verify_user==True:
             login(request, user)
             user_info=get_object_or_404(UserInfo, user_id=user.pk)
-            return redirect('firstapp:commingsoon')
-            #return redirect('firstapp:dashboard',current_level=user_info.current_level,rank=user_info.rank)
+            #return redirect('firstapp:commingsoon')
+            return redirect('firstapp:dashboard',current_level=user_info.current_level,rank=user_info.rank)
         elif user is None :
             messages.error(request, 'Username or Password not Correct')
             return redirect('firstapp:login')
@@ -104,24 +104,22 @@ def go_to_question(request,q_no):
         image_comments=i.image_comments
 
     if request.method=="POST":
-        form=AnswerForm(request.POST)
-        if form.is_valid():
-            answer=form.cleaned_data['answer']
+        
+        answer=request.POST['answer']
 
-            if answer==question_answer:
-                user_info.current_level=user_info.current_level+1
-                user_info.score=user_info.score+1
-                user_info.timestamp=datetime.datetime.now()
-                user_info.save()
-                if user_info.score==25:
-                    return redirect('firstapp:complete_task')
-                return redirect('firstapp:question_current',q_no=user_info.current_level)
-            else :
-                return render(request,'level1.html',{'heading':heading,'img':img,'question_no':question_no,'form':form,'wrong':True,'current_level':current_level,'image_comments':image_comments})           
+        if answer==question_answer:
+            user_info.current_level=user_info.current_level+1
+            user_info.score=user_info.score+1
+            user_info.timestamp=datetime.datetime.now()
+            user_info.save()
+            if user_info.score==25:
+                return redirect('firstapp:complete_task')
+            return redirect('firstapp:question_current',q_no=user_info.current_level)
+        else :
+            return render(request,'level1.html',{'heading':heading,'img':img,'question_no':question_no,'wrong':True,'current_level':current_level,'image_comments':image_comments})           
             
-    else:
-        form=AnswerForm()
-    return render(request, 'level1.html', {'heading': heading, 'img': img, 'question_no': question_no, 'form': form, 'wrong': False, 'current_level': current_level, 'image_comments': image_comments})
+   
+    return render(request, 'level1.html', {'heading': heading, 'img': img, 'question_no': question_no, 'wrong': False, 'current_level': current_level, 'image_comments': image_comments})
 
 def complete_task(request):
     if not request.user.is_authenticated:
