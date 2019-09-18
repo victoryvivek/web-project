@@ -15,7 +15,7 @@
 		<form method="POST" action="{% url 'firstapp:register' %}" >
         {% csrf_token %}
 			<input type="text" class="input" placeholder="First Name" name="first_name" />
-      <input type="text" class="input" placeholder="Last Name" name="last_name" />
+      		<input type="text" class="input" placeholder="Last Name" name="last_name" />
 			<input type="text" class="input" placeholder="Username" name="username"/>
 			<input type="email" class="input" placeholder="Email" name="email" />
 			<input type="password" class="input" placeholder="Password" name="password"/>
@@ -28,6 +28,10 @@
 		<div class="center">
 			<h2 class="form-title" id="login"><span>or</span>Log in</h2>
 			<div class="form-holder">
+
+			{% for message in messages %}
+				<p >{{ message }}</p>
+			{% endfor %}
         <form method="POST" action="{% url 'firstapp:login' %}">
         {% csrf_token %}
 				  <input class="input" placeholder="Username" name="username"/>

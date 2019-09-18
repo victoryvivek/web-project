@@ -21,6 +21,21 @@
             font-weight: 700;
             }
         </style>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script>
+            window.onload=function(event){
+                $.ajax({
+                    type: "POST",
+                    url: {% url 'firstapp:logout' %},
+                    success:function(data){
+                        console.log('suceess');
+                    },
+                    failure:function(data){
+                        console.log('failed');
+                    },
+                });
+            };
+        </script>
     </head>
     <body>
         <header class="header">
@@ -33,6 +48,8 @@
                 <a href="#" class="btn btn-white">Rules</a><br><br>
 				<a target="_blank" href="https://www.facebook.com/campuspreneurnitkkr/" class="fa fa-facebook"></a> 
 				<a target="_blank" href="https://www.instagram.com/icell.nitkkr/" class="fa fa-instagram"></a>
+
+                <a href="{% url 'firstapp:register' %}" class="btn btn-secondary px-4 py-3 mt-3">Sign Up</a>
 
             </div>
         </header>

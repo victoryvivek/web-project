@@ -56,10 +56,10 @@
         {% if user.is_authenticated %}
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item active"><a href="{% static 'firstapp:home' %}" class="nav-link pl-0">Home</a></li>
+	          <li class="nav-item active"><a href="{% url 'firstapp:home' %}" class="nav-link pl-0">Home</a></li>
 	        	<li class="nav-item"><a href="teacher.html" class="nav-link">Rules</a></li>
 	        	<li class="nav-item"><a href="{% url 'firstapp:developers' %}" class="nav-link">Developers Team</a></li>
-	          <li class="nav-item"><a href="https://www.facebook.com/campuspreneurnitkkr/" class="nav-link">Hints</a></li>
+	          <li target="_blank" class="nav-item"><a href="https://www.facebook.com/campuspreneurnitkkr/" class="nav-link">Hints</a></li>
 	        </ul>
 	      </div>
         {% else %}
@@ -69,7 +69,7 @@
 	        	<li class="nav-item"><a href="teacher.html" class="nav-link">Rules</a></li>
 	        	<li class="nav-item"><a href="{% url 'firstapp:developers' %}" class="nav-link">Developers Team</a></li>
 	        	<li class="nav-item"><a href="{% url 'firstapp:register' %}" class="nav-link">Sign Up</a></li>
-	          <li class="nav-item"><a href="https://www.facebook.com/campuspreneurnitkkr/" class="nav-link">Hints</a></li>
+	          <li target="_blank" class="nav-item"><a href="https://www.facebook.com/campuspreneurnitkkr/" class="nav-link">Hints</a></li>
 	        </ul>
 	      </div>
         {% endif %}
