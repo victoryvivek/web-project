@@ -24,7 +24,9 @@ class Question(models.Model):
     heading=models.CharField(max_length=200,unique=True)
     question_no=models.IntegerField(default=1)
     product_image = models.ImageField(upload_to='question_images')
+    image_comments=models.TextField(max_length=100,blank=True)
     question_answer=models.CharField(max_length=200,unique=True)
+
 
     def __str__(self):
         return str(self.heading)

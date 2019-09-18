@@ -101,6 +101,7 @@ def go_to_question(request,q_no):
         img=i.product_image
         question_no=i.question_no
         question_answer=i.question_answer
+        image_comments=i.image_comments
 
     if request.method=="POST":
         form=AnswerForm(request.POST)
@@ -116,11 +117,11 @@ def go_to_question(request,q_no):
                     return redirect('firstapp:complete_task')
                 return redirect('firstapp:question_current',q_no=user_info.current_level)
             else :
-                return render(request,'level1.html',{'heading':heading,'img':img,'question_no':question_no,'form':form,'wrong':True,'current_level':current_level})           
+                return render(request,'level1.html',{'heading':heading,'img':img,'question_no':question_no,'form':form,'wrong':True,'current_level':current_level,'image_comments':image_comments})           
             
     else:
         form=AnswerForm()
-    return render(request,'level1.html',{'heading':heading,'img':img,'question_no':question_no,'form':form,'wrong':False,'current_level':current_level})
+    return render(request, 'level1.html', {'heading': heading, 'img': img, 'question_no': question_no, 'form': form, 'wrong': False, 'current_level': current_level, 'image_comments': image_comments})
 
 def complete_task(request):
     if not request.user.is_authenticated:
