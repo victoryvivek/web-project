@@ -57,12 +57,14 @@ def register_user(request):
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
         email_ = request.POST['email']
+        college_name=request.POST['college_name']
         user = User.objects.create_user(username=user_name, email=email_, password=password_, first_name=first_name, last_name=last_name)
         user.save()
         user_info=UserInfo.create(user)
+        user_info.college_name=college_name
         user_info.save()
         return redirect('firstapp:login')
-    return render(request,'login.html')
+    return render(request,'registration.html')
 
 def go_to_dashboard(request,current_level,rank):
 
@@ -86,11 +88,20 @@ def thanks_for_logging(request):
 
 def go_to_question(request,q_no):
 
+    if 'val' in request.POST:
+        print('post')
+    elif 'val' in request.GET:
+        val=request.GET['val']
+        print('get '+str(val))
+    else:
+        print('Not Found request')
+
     if not request.user.is_authenticated:
         return redirect('firstapp:login')
 
     user_info=get_object_or_404(UserInfo, user_id=request.user.pk)
     current_level=user_info.current_level
+    rank=user_info.rank
 
     if q_no != current_level:
         return redirect('firstapp:question_current',q_no=current_level)
@@ -103,9 +114,12 @@ def go_to_question(request,q_no):
         question_answer=i.question_answer
         image_comments=i.image_comments
 
+    print("in the method")
+
     if request.method=="POST":
-        
+    
         answer=request.POST['answer']
+        print("answer", answer)
 
         if answer==question_answer:
             user_info.current_level=user_info.current_level+1
@@ -116,10 +130,12 @@ def go_to_question(request,q_no):
                 return redirect('firstapp:complete_task')
             return redirect('firstapp:question_current',q_no=user_info.current_level)
         else :
-            return render(request,'level1.html',{'heading':heading,'img':img,'question_no':question_no,'wrong':True,'current_level':current_level,'image_comments':image_comments})           
+            return render(request,'level1.html',{'heading':heading,'img':img,'question_no':question_no,'wrong':True,
+                                                 'current_level': current_level, 'image_comments': image_comments, 'rank': rank})
             
    
-    return render(request, 'level1.html', {'heading': heading, 'img': img, 'question_no': question_no, 'wrong': False, 'current_level': current_level, 'image_comments': image_comments})
+    return render(request, 'level1.html', {'heading': heading, 'img': img, 'question_no': question_no, 'wrong': False, 
+                                           'current_level': current_level, 'image_comments': image_comments, 'rank': rank})
 
 def complete_task(request):
     if not request.user.is_authenticated:
@@ -133,6 +149,7 @@ def get_leaderboard(request):
 
     user_info=get_object_or_404(UserInfo, user_id=request.user.pk)
     current_level=user_info.current_level
+    rank=user_info.rank
 
     user_info_queryset=UserInfo.objects.all()
 
@@ -149,7 +166,7 @@ def get_leaderboard(request):
         x.rank=cnt
         cnt=cnt+1
 
-    return render(request,'leaderboard.html',{'user_info_list':user_info_list,'current_level':current_level})
+    return render(request,'leaderboard.html',{'user_info_list':user_info_list,'current_level':current_level,'rank':rank})
 
 def get_score(user_info):
     return user_info.score
@@ -165,12 +182,20 @@ def home(request):
     if request.user.is_authenticated :
         user_info=get_object_or_404(UserInfo, user_id=request.user.pk)
         current_level=user_info.current_level
+        rank=user_info.rank
     else:
         current_level=1
-    return render(request,'homeredirect.html',{'current_level':current_level})
+        rank=1
+    return render(request,'homeredirect.html',{'current_level':current_level,'rank':rank})
 
 def go_to_developers(request):
     return render(request,'developers.html')
 
 def comming_soon(request):
     return render(request,'commingsoon.html')
+
+def contact(request):
+    return render(request,'contact.html')
+
+def rules(request):
+    return render(request,'rules.html')

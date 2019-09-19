@@ -8,6 +8,7 @@ class UserInfo(models.Model):
     current_level=models.IntegerField(default=1)
     score=models.IntegerField(default=0)
     rank=models.IntegerField(default=0)
+    college_name=models.CharField(max_length=264,blank=True)
     timestamp=models.DateTimeField()
 
     @classmethod

@@ -1,6 +1,6 @@
     /*
     Flaticon icon font: Flaticon
-    Creation date: 26/01/2019 10:34
+    Creation date: 24/01/2019 09:02
     */
 
     @font-face {
@@ -37,20 +37,16 @@
   font-smoothing: antialiased;
     }
 
-    .flaticon-teacher:before { content: "\f100"; }
-.flaticon-books:before { content: "\f101"; }
-.flaticon-diploma:before { content: "\f102"; }
-.flaticon-reading:before { content: "\f103"; }
-.flaticon-security:before { content: "\f104"; }
-.flaticon-education:before { content: "\f105"; }
-.flaticon-jigsaw:before { content: "\f106"; }
-.flaticon-kids:before { content: "\f107"; }
+    .flaticon-frontal-truck:before { content: "\f100"; }
+.flaticon-sea-ship-with-containers:before { content: "\f101"; }
+.flaticon-car:before { content: "\f102"; }
+.flaticon-platform:before { content: "\f103"; }
+.flaticon-travel:before { content: "\f104"; }
+.flaticon-barn:before { content: "\f105"; }
     
-    $font-Flaticon-teacher: "\f100";
-    $font-Flaticon-books: "\f101";
-    $font-Flaticon-diploma: "\f102";
-    $font-Flaticon-reading: "\f103";
-    $font-Flaticon-security: "\f104";
-    $font-Flaticon-education: "\f105";
-    $font-Flaticon-jigsaw: "\f106";
-    $font-Flaticon-kids: "\f107";
+    $font-Flaticon-frontal-truck: "\f100";
+    $font-Flaticon-sea-ship-with-containers: "\f101";
+    $font-Flaticon-car: "\f102";
+    $font-Flaticon-platform: "\f103";
+    $font-Flaticon-travel: "\f104";
+    $font-Flaticon-barn: "\f105";

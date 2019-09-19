@@ -18,4 +18,6 @@ urlpatterns = [
     path('leaderboard/',views.get_leaderboard,name="leaderboard"),
     path('developers/',views.go_to_developers,name='developers'),
     path('commingsoon/', views.comming_soon, name="commingsoon"),
+    path('contact/', views.contact, name="contact"),
+    path('rules/', views.rules, name="rules"),
 ]
