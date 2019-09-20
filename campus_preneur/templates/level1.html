@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
   </head>
   <body>
-  
+
   <div class="site-wrap">
 
     <div class="site-mobile-menu">
@@ -31,9 +31,9 @@
       </div>
       <div class="site-mobile-menu-body"></div>
     </div>
-    
+
     {% if user.is_authenticated %}
-    
+
     <header class="site-navbar py-3" role="banner">
       <div class="container-fluid">
         <div class="row align-items-center">
@@ -48,7 +48,7 @@
                 <li><a href="{% url 'firstapp:dashboard' current_level rank %}">Dashboard</a></li>
 				        <li class="active"><a href="{% url 'firstapp:question_current' current_level %}">Current Level</a></li>
                 <li><a href="{% url 'firstapp:rules' %}">Rules</a></li>
-                <li><a href="{% url 'firstapp:contact' %}">Contact</a></li>
+                <li><a href="https://www.facebook.com/campuspreneurnitkkr/" target='_blank'>Hints</a></li>
                 <li class="cta"><a href="{% url 'firstapp:logout' %}">Sign out</a></li>
 
               </ul>
@@ -75,7 +75,7 @@
                 <li><a href="{% url 'firstapp:rules' %}">Rules</a></li>
                 <li><a href="{% url 'firstapp:contact' %}">Contact</a></li>
                 <li class="cta"><a href="{% url 'firstapp:login' %}">Sign in</a></li>
-                <li class="cta"><a href="{% url 'firstapp:register' %}">Sign up</a></li>               
+                <li class="cta"><a href="{% url 'firstapp:register' %}">Sign up</a></li>
 
               </ul>
             </nav>
@@ -85,35 +85,46 @@
         </div>
       </div>
     </header>
-    
+
 
     {% endif %}
+
+
     <div class="site-section">
       <div class="container">
         <div class="row">
-          <div class="col-md-10">
+          <div class="col-md-6" style="margin:auto">
             <br><br><br>
-            <span class="d-block mb-3 caption" data-aos="fade-up">Level: <span>{{ current_level }}</span></span>
-            <div class="col-md-6 col-lg-4 mb-5 mb-lg-5" data-aos="fade-up" data-aos-delay="400">
-            <a href="#" class="d-block mb-4">
-              <img src="{{ img.url }}" alt="Image" class="img-fluid"> 
-            </a>
-          </div>
-
-        <form method="post">
-				{% csrf_token %}
-            <div class="col-md-6 mb-3">
-                  <label class="" for="fname">Answer</label>
-                  <input type="text" id="fname" class="form-control"  name="answer">
+            {% if wrong %}
+            <script>
+                alert('Wrong Answer...Try Again');
+            </script>
+            {% endif %}
+            <span class="d-block mb-3 caption" data-aos="fade-up" style="text-align: center;"><h3>Level: <span>{{ current_level }}</span></h3></span>
+            <div class="col-md-12">
+                {% if image_clickable %}
+              <a href="https://www.youtube.com"><span><img src="{{ img.url }}" alt="Image" class="img-fluid " style=" margin-left: auto; margin-right: auto;width: 100%;"></span></a>
+              {%else%}
+              <span><img src="{{ img.url }}" alt="Image" class="img-fluid " style=" margin-left: auto; margin-right: auto;width: 100%;"></span>
+              <!--<p>{{image_comments}}</p>-->
             </div>
-            
-				  <input type="submit"  class="btn-custom">
-			</form>
+            {%endif%}
+             <form method="post">
+				{% csrf_token %}
+            <div class="col-md-12" align="center">
+
+                  <label class="" for="fname" ><h3>Answer</h3></label>
+                  <input type="text" id="fname" class="form-control" name="answer">
+            </div>
+            <div class="col-md-12" align="center"><br>
+            <input type="submit" class="btn-custom" value="Submit"></div>
+            </form>
           </div>
         </div>
       </div>
     </div>
-      
+
+
     <footer class="site-footer">
       <div class="container">
         <div class="row mb-5">
@@ -136,11 +147,11 @@
               <a href="https://www.facebook.com/campuspreneurnitkkr/" class="p-2 pl-0"><span class="icon-facebook"></span></a>
               <a href="https://www.instagram.com/icell.nitkkr" class="p-2"><span class="icon-instagram"></span></a>
             </p>
-            
+
           </div>
         </div>
         <div class="row">
-          
+
             <div class="col-md-12 text-center">
               <div class="border-top pt-5">
               <p>
@@ -151,7 +162,7 @@
         </div>
       </div>
     </footer>
-    
+
   </div>
 
   <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
@@ -168,6 +179,6 @@
 
   <script src="{% static 'js/main.js' %}"></script>
 
-    
+
   </body>
 </html>

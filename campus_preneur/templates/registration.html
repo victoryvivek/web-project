@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
   </head>
   <body>
-  
+
   <div class="site-wrap">
 
     <div class="site-mobile-menu">
@@ -31,7 +31,7 @@
       </div>
       <div class="site-mobile-menu-body"></div>
     </div>
-    
+
     {% if user.is_authenticated %}
 
     <header class="site-navbar py-3" role="banner">
@@ -86,16 +86,21 @@
         <div class="row align-items-center">
           <div class="col-md-10">
             <span class="d-block mb-3 caption" data-aos="fade-up">Get Started!</span>
-            <h1 class="d-block mb-4" data-aos="fade-up" data-aos-delay="100">Sign Up</h1>
+            <h1 class="d-block mb-4" data-aos="fade-up" data-aos-delay="100"><a href="#read">Sign Up</a></h1>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="site-section">
+    <div class="site-section release">
       <div class="container">
         <div class="row">
-          <div class="col-md-4" data-aos="fade-up">
+          <div class="col-md-4" data-aos="fade-up" id="read">
+
+              {% for message in messages %}
+                <p>{{message}}</p>
+              {% endfor %}
+
             <form method="post">
              {% csrf_token %}
 
@@ -103,33 +108,33 @@
                 <div class="col-md-12 mb-3 mb-md-0">
                   <label class="" for="fname">First Name</label>
                   <input type="text" id="firstname" class="form-control" name="first_name">
-                </div>                
+                </div>
               </div>
 
               <div class="row form-group">
                 <div class="col-md-12 mb-3 mb-md-0">
                   <label class="" for="lname">Last Name</label>
                   <input type="text" id="lastname" class="form-control" name="last_name">
-                </div>                
+                </div>
               </div>
 
               <div class="row form-group">
                 <div class="col-md-12 mb-3 mb-md-0">
                   <label class="" for="fname">User Name</label>
                   <input type="text" id="username" class="form-control" name="username">
-                </div>                
+                </div>
               </div>
 
               <div class="row form-group">
                 <div class="col-md-12 mb-3 mb-md-0">
                   <label class="" for="fname">College</label>
                   <input type="text" id="college" class="form-control" name="college_name">
-                </div>                
+                </div>
               </div>
 
-              <div class="row form-group">                
+              <div class="row form-group">
                 <div class="col-md-12">
-                  <label class="" for="email">Email</label> 
+                  <label class="" for="email">Email</label>
                   <input type="email" id="email" class="form-control" name="email">
                 </div>
               </div>
@@ -138,7 +143,14 @@
                 <div class="col-md-12 mb-3 mb-md-0">
                   <label class="" for="password">Password</label>
                   <input type="password" id="password" class="form-control" name="password">
-                </div>                
+                </div>
+              </div>
+
+              <div class="row form-group">
+                <div class="col-md-12 mb-3 mb-md-0">
+                  <label class="" for="contact">Contact Number</label>
+                  <input type="number" id="contact" class="form-control" name="contact">
+                </div>
               </div>
 
 
@@ -148,14 +160,14 @@
                 </div>
               </div>
 
-  
+
             </form>
           </div>
           </div>
         </div>
       </div>
     </div>
-    
+
     <footer class="site-footer">
       <div class="container">
         <div class="row mb-5">
@@ -182,7 +194,7 @@
           </div>
         </div>
         <div class="row">
-          
+
             <div class="col-md-12 text-center">
               <div class="border-top pt-5">
               <p>
@@ -193,7 +205,7 @@
         </div>
       </div>
     </footer>
-    
+
   </div>
 
   <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
@@ -209,6 +221,6 @@
   <script src="{% static 'js/aos.js' %}"></script>
 
   <script src="{% static 'js/main.js' %}"></script>
-    
+
   </body>
 </html>

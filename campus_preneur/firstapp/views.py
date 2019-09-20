@@ -15,13 +15,13 @@ import datetime
 # Create your views here.
 
 def login_user(request):
-    
+
     if request.method=='POST':
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
 
-        secret_key = "6LfyY7gUAAAAACHtVWYfO5OpHJIBoZ0f2FnzRqho"
+        secret_key = "6LdJXrkUAAAAAGG2qRLcV0omFNS33BSgjkGbIn2H"
         client_key = request.POST.get('g-recaptcha-response')
         captcha_data={
             'secret':secret_key,
@@ -58,12 +58,21 @@ def register_user(request):
         last_name = request.POST['last_name']
         email_ = request.POST['email']
         college_name=request.POST['college_name']
-        user = User.objects.create_user(username=user_name, email=email_, password=password_, first_name=first_name, last_name=last_name)
-        user.save()
-        user_info=UserInfo.create(user)
-        user_info.college_name=college_name
-        user_info.save()
-        return redirect('firstapp:login')
+        phone=request.POST['contact']
+        username_check=User.objects.get(username=user_name)
+        print('user ',username_check)
+        if username_check is not None:
+            messages.error(request,'Username Already Taken!')
+            return redirect('firstapp:register')
+
+        else:
+            user = User.objects.create_user(username=user_name, email=email_, password=password_, first_name=first_name, last_name=last_name)
+            user.save()
+            user_info=UserInfo.create(user)
+            user_info.college_name=college_name
+            user_info.phone=phone
+            user_info.save()
+            return redirect('firstapp:login')
     return render(request,'registration.html')
 
 def go_to_dashboard(request,current_level,rank):
@@ -113,14 +122,17 @@ def go_to_question(request,q_no):
         question_no=i.question_no
         question_answer=i.question_answer
         image_comments=i.image_comments
+        image_clickable=i.image_clickable
+        file=i.file_upload
 
     print("in the method")
 
     if request.method=="POST":
-    
+
         answer=request.POST['answer']
         print("answer", answer)
-
+        user_info.entered_answers=user_info.entered_answers+"\n"+answer
+        user_info.save()
         if answer==question_answer:
             user_info.current_level=user_info.current_level+1
             user_info.score=user_info.score+1
@@ -131,11 +143,11 @@ def go_to_question(request,q_no):
             return redirect('firstapp:question_current',q_no=user_info.current_level)
         else :
             return render(request,'level1.html',{'heading':heading,'img':img,'question_no':question_no,'wrong':True,
-                                                 'current_level': current_level, 'image_comments': image_comments, 'rank': rank})
-            
-   
-    return render(request, 'level1.html', {'heading': heading, 'img': img, 'question_no': question_no, 'wrong': False, 
-                                           'current_level': current_level, 'image_comments': image_comments, 'rank': rank})
+                                                 'current_level': current_level, 'image_comments': image_comments, 'rank': rank,'image_clickable':image_clickable,'file':file})
+
+
+    return render(request, 'level1.html', {'heading': heading, 'img': img, 'question_no': question_no, 'wrong': False,
+                                           'current_level': current_level, 'image_comments': image_comments, 'rank': rank,'image_clickable':image_clickable,'file':file})
 
 def complete_task(request):
     if not request.user.is_authenticated:
@@ -160,7 +172,7 @@ def get_leaderboard(request):
 
     user_info_list.sort(key=get_timestamp)
     user_info_list.sort(key=get_score, reverse=True)
-    
+
     cnt=1
     for x in user_info_list:
         x.rank=cnt
@@ -178,7 +190,7 @@ def index(request):
     return render(request,'preneur.html')
 
 def home(request):
-    
+
     if request.user.is_authenticated :
         user_info=get_object_or_404(UserInfo, user_id=request.user.pk)
         current_level=user_info.current_level
